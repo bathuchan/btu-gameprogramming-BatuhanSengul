@@ -11,8 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float speed=3f;
 
-    [SerializeField]
-    private float xBorderValue,yBorderValue;
+    
+    public float xBorderValue, yBorderValue;
 
     private float horizontalVal, verticalVal;
 
@@ -22,6 +22,8 @@ public class PlayerMovement : MonoBehaviour
     private float projSpeed=10f, projLifespan=1f;
     [SerializeField]
     float fireCooldown = 0.5f, timer = 0.5f;
+    [SerializeField]
+    int lives = 3;
     void Start()
     {
         Debug.Log("Game Started");
@@ -71,6 +73,17 @@ public class PlayerMovement : MonoBehaviour
                 Destroy(go,projLifespan);
                 
             }
+        }
+
+    }
+
+    public void LoverLives()
+    {
+        lives--;
+        if (lives <= 0) 
+        {
+            Destroy(gameObject);
+            Debug.Log("No Lives Left GAME OVER!!");
         }
 
     }
