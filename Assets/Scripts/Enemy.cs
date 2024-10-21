@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
         pm = FindObjectOfType<PlayerMovement>();
         xPos = Random.Range(-pm.xBorderValue, pm.xBorderValue);
         transform.position = new Vector3(xPos, 6, 0);
-        speed = speed+ Random.Range(-speedRandomMultiplier, speedRandomMultiplier);
+        speed = speed+ Random.Range(0, speedRandomMultiplier);
 
     }
     // Update is called once per frame
@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Player")) 
         {
-            pm.LoverLives();
+            pm.LowerLives();
             Destroy(gameObject);
         }
         else if (other.CompareTag("Laser")) 

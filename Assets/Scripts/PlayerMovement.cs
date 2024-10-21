@@ -77,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    public void LoverLives()
+    public void LowerLives()
     {
         lives--;
         if (lives <= 0) 
