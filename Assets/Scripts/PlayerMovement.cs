@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     float fireCooldown = 0.5f, timer = 0.5f;
     [SerializeField]
-    int lives = 3;
+    public int lives = 3;
     void Start()
     {
         Debug.Log("Game Started");
