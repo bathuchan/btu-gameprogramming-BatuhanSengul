@@ -9,9 +9,9 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
-    private float speed=3f;
+    private float speed = 3f;
 
-    
+
     public float xBorderValue, yBorderValue;
 
     private float horizontalVal, verticalVal;
@@ -19,11 +19,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private GameObject laserPrefab;
     [SerializeField]
-    private float projSpeed=10f, projLifespan=1f;
+    private float projSpeed = 10f, projLifespan = 1f;
     [SerializeField]
     float fireCooldown = 0.5f, timer = 0.5f;
     [SerializeField]
     public int lives = 3;
+
+
+    [SerializeField] private GameObject playerSprite;
+    public float tiltAmount = 5f;    // Max tilt angle in degrees
+    public float tiltSpeed = 5f;     // Speed of tilting
+    public float maxTiltAngle = 5f;  // Maximum tilt angle for clamping
+
+    private float targetZRotation;
     void Start()
     {
         Debug.Log("Game Started");
@@ -56,7 +64,27 @@ public class PlayerMovement : MonoBehaviour
         transform.position = new Vector3(Math.Clamp(transform.position.x, -xBorderValue, xBorderValue),
             Math.Clamp(transform.position.y, -yBorderValue, yBorderValue), 
             transform.position.z);
-        
+
+
+        // Calculate target rotation based on input
+        targetZRotation = -horizontalVal * tiltAmount;
+
+        // Smoothly interpolate the current z-rotation towards the target angle
+        float currentZRotation = playerSprite.transform.localEulerAngles.z;
+        // Adjust for negative angles by converting ranges from 0-360 to -180 to 180
+        if (currentZRotation > 180) currentZRotation -= 360;
+
+        float zRotation = Mathf.Lerp(currentZRotation, targetZRotation, Time.deltaTime * tiltSpeed);
+
+        // Clamp the rotation to the specified range
+        zRotation = Mathf.Clamp(zRotation, -maxTiltAngle, maxTiltAngle);
+
+        // Apply the clamped rotation
+        playerSprite.transform.localEulerAngles = new Vector3(
+            playerSprite.transform.localEulerAngles.x,
+            playerSprite.transform.localEulerAngles.y,
+            zRotation
+        );
     }
 
     private void HandleShoot() 
