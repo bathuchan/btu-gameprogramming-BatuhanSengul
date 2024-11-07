@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -9,6 +10,7 @@ public class Enemy : MonoBehaviour
     private float xPos;
     private PlayerMovement pm;
     
+
     void Start() 
     {
         pm = FindObjectOfType<PlayerMovement>();
@@ -46,5 +48,10 @@ public class Enemy : MonoBehaviour
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
+    }
+    private void OnDestroy()
+    {
+        pm.SpawnExp(transform.position);
+        
     }
 }

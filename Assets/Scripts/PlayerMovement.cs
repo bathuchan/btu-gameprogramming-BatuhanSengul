@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -38,6 +39,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool tripleShotIsActive=false;
     [SerializeField] private GameObject tripleLaserPrefab;
     [SerializeField] private float tripleShotDuration = 5f;
+
+    [Header("VFX Settings")]
+    [SerializeField] private GameObject explosionPrefab;
+    [SerializeField] private Transform vfxContainer;
     void Start()
     {
         Debug.Log("Game Started");
@@ -129,6 +134,12 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("No Lives Left GAME OVER!!");
         }
 
+    }
+    public void SpawnExp(Vector3 expPos) 
+    {
+        GameObject exp = Instantiate(explosionPrefab, expPos, Quaternion.identity);
+        exp.transform.parent = vfxContainer;
+        Destroy(exp, 4f);
     }
 
     Coroutine tripCoroutine;
