@@ -17,7 +17,8 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalVal, verticalVal;
 
     [SerializeField]
-    private GameObject laserPrefab;
+    private GameObject laserPrefab, laserContainer;
+
     [SerializeField]
     private float projSpeed = 10f, projLifespan = 1f;
     [SerializeField]
@@ -25,13 +26,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     public int lives = 3;
 
-
+    [Header("Sprite Tilt Settings")]
     [SerializeField] private GameObject playerSprite;
     public float tiltAmount = 5f;    
     public float tiltSpeed = 5f;     
     public float maxTiltAngle = 5f;  
 
     private float targetZRotation;
+
+    [Header("Power-Up Settings")]
+    [SerializeField] private bool tripleShotIsActive=false;
+    [SerializeField] private GameObject tripleLaserPrefab;
+    [SerializeField] private float tripleShotDuration = 5f;
     void Start()
     {
         Debug.Log("Game Started");
@@ -92,12 +98,22 @@ public class PlayerMovement : MonoBehaviour
         if(Input.GetKey(KeyCode.Space) && fireCooldown <= 0) 
         {
             fireCooldown = timer;
-            GameObject go= Instantiate(laserPrefab, transform.position+Vector3.up, Quaternion.identity);
+            GameObject laser;
+            if (tripleShotIsActive) 
+            {
+                laser = Instantiate(tripleLaserPrefab, transform.position + Vector3.up, Quaternion.identity);
+            }
+            else 
+            {
+                laser = Instantiate(laserPrefab, transform.position + Vector3.up, Quaternion.identity);
+            }
             
-            if(go.TryGetComponent<Rigidbody>(out Rigidbody rb)) 
+            laser.transform.parent=laserContainer.transform;
+            
+            if(laser.TryGetComponent<Rigidbody>(out Rigidbody rb)) 
             {
                 rb.AddForce(Vector3.up * projSpeed,ForceMode.Impulse);
-                Destroy(go,projLifespan);
+                Destroy(laser, projLifespan);
                 
             }
         }
@@ -114,6 +130,34 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+
+    Coroutine tripCoroutine;
+
+    public void StartTriplePowerup() 
+    {
+        
+        if (tripCoroutine == null)
+        {
+            tripleShotIsActive = true;
+            tripCoroutine = StartCoroutine(TripleEffect());
+        }
+        else
+        {
+            StopCoroutine(tripCoroutine);
+            tripleShotIsActive = true;
+            tripCoroutine = StartCoroutine(TripleEffect());
+        }
+
+    }
+
+    public IEnumerator TripleEffect()
+    {
+
+        yield return new WaitForSeconds(tripleShotDuration);
+        tripleShotIsActive = false;
+    }
+
+    
 }
 
 
