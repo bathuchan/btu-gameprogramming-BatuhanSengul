@@ -40,18 +40,16 @@ public class Enemy : MonoBehaviour
     {
         if (other.CompareTag("Player")) 
         {
+            pm.SpawnExp(transform.position);
             pm.LowerLives();
             Destroy(gameObject);
         }
         else if (other.CompareTag("Laser")) 
         {
+            pm.SpawnExp(transform.position);
             Destroy(other.gameObject);
             Destroy(gameObject);
         }
     }
-    private void OnDestroy()
-    {
-        pm.SpawnExp(transform.position);
-        
-    }
+    
 }

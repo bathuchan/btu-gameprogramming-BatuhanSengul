@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2841945087731069886}
   - component: {fileID: 16831541702185309}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: laser_sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2791260120519030457}
   - component: {fileID: 7515670428769779761}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: laser_sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   m_Component:
   - component: {fileID: 134723167558787275}
   - component: {fileID: 6588267585300244367}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Laser (1)
   m_TagString: Laser
   m_Icon: {fileID: 0}
@@ -234,9 +234,9 @@ GameObject:
   m_Component:
   - component: {fileID: 808981152277630708}
   - component: {fileID: 7001728695385466079}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Triple Laser
-  m_TagString: Untagged
+  m_TagString: Laser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -296,7 +296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2506592488970831564}
   - component: {fileID: 8176704651392964868}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Laser
   m_TagString: Laser
   m_Icon: {fileID: 0}
@@ -352,7 +352,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5725801127934436800}
   - component: {fileID: 8406688669669567287}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Laser (2)
   m_TagString: Laser
   m_Icon: {fileID: 0}
@@ -408,7 +408,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1290269087417325607}
   - component: {fileID: 5550184972933834598}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: laser_sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
