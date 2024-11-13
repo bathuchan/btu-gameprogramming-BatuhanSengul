@@ -43,10 +43,13 @@ public class PlayerMovement : MonoBehaviour
     [Header("VFX Settings")]
     [SerializeField] private GameObject explosionPrefab;
     [SerializeField] private Transform vfxContainer;
+    CameraShake cameraShake;
     void Start()
     {
         Debug.Log("Game Started");
         timer= fireCooldown;
+        cameraShake = Camera.main.GetComponent<CameraShake>();
+        
     }
     
     void Update()// fpse bagli calisir
@@ -140,6 +143,7 @@ public class PlayerMovement : MonoBehaviour
         GameObject exp = Instantiate(explosionPrefab, expPos, Quaternion.identity);
         exp.transform.parent = vfxContainer;
         Destroy(exp, 4f);
+        cameraShake.StartShake(0.5f, 0.3f);
     }
 
     Coroutine tripCoroutine;
@@ -167,6 +171,8 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(tripleShotDuration);
         tripleShotIsActive = false;
     }
+
+   
 
     
 }
