@@ -7,7 +7,7 @@ public class PowerUp : MonoBehaviour
     public enum PowerUpType 
     {
         TripleShotPowerup,
-        Option2,//diğer powerupları bu şekilde eklemek daha kolay olacak
+        SpeedPowerup,//diğer powerupları bu şekilde eklemek daha kolay olacak
         Option3,
     }
     public PowerUpType type;
@@ -50,6 +50,11 @@ public class PowerUp : MonoBehaviour
                 case PowerUpType.TripleShotPowerup:
                     pm.StartTriplePowerup();
                     break;
+
+                case PowerUpType.SpeedPowerup:
+                    pm.StartSpeedPowerUp();
+                    break;
+
                 default:
                     Debug.LogWarning("PowerUp type doesnt declared!");
                     break;

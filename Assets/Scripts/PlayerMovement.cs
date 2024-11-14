@@ -10,7 +10,8 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
-    private float speed = 3f;
+    private float regularSpeed = 3f;
+    private float currentSpeed;
 
 
     public float xBorderValue, yBorderValue;
@@ -39,18 +40,28 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool tripleShotIsActive=false;
     [SerializeField] private GameObject tripleLaserPrefab;
     [SerializeField] private float tripleShotDuration = 5f;
-    Coroutine tripCoroutine;
+
+    [Header("Speed Power-Up Settings")]
+    [SerializeField] private bool speedIsActive = false;
+    [SerializeField] private float speedDuration = 5f;
+    [SerializeField] private float speedMultiplier = 2f;
+
+    Coroutine tripCoroutine,speedCoroutine;
 
     [Header("VFX Settings")]
     [SerializeField] private GameObject explosionPrefab;
     [SerializeField] private Transform vfxContainer;
+    public Animator animator;
     CameraShake cameraShake;
     void Start()
     {
         Debug.Log("Game Started");
         timer= fireCooldown;
         cameraShake = Camera.main.GetComponent<CameraShake>();
-        
+        currentSpeed=regularSpeed;
+        animator = transform.GetChild(0).GetComponent<Animator>();
+
+
     }
     
     void Update()// fpse bagli calisir
@@ -73,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
       
         //Oyun nesnesinin Sag veya Sola haraketi
         
-        transform.Translate(new Vector3(horizontalVal * speed * Time.deltaTime, verticalVal * speed * Time.deltaTime, transform.position.z));
+        transform.Translate(new Vector3(horizontalVal * currentSpeed * Time.deltaTime, verticalVal * currentSpeed * Time.deltaTime, transform.position.z));
 
         //Ekran keanar sinirlari
         transform.position = new Vector3(Math.Clamp(transform.position.x, -xBorderValue, xBorderValue),
@@ -173,9 +184,38 @@ public class PlayerMovement : MonoBehaviour
         tripleShotIsActive = false;
     }
 
-   
+    public void StartSpeedPowerUp()
+    {
 
-    
+        if (speedCoroutine == null)
+        {
+            speedIsActive = true;
+            speedCoroutine = StartCoroutine(SpeedEffect());
+        }
+        else
+        {
+            StopCoroutine(speedCoroutine);
+            animator.SetBool("SpeedIsOn", false);
+            currentSpeed =regularSpeed;
+            speedIsActive = true;
+            
+            speedCoroutine = StartCoroutine(SpeedEffect());
+        }
+
+    }
+
+    public IEnumerator SpeedEffect()
+    {
+        currentSpeed=regularSpeed*speedMultiplier;
+        animator.SetBool("SpeedIsOn", true);
+
+        yield return new WaitForSeconds(speedDuration);
+        currentSpeed = regularSpeed;
+        speedIsActive = false;
+        animator.SetBool("SpeedIsOn", false);
+    }
+
+
 }
 
 
