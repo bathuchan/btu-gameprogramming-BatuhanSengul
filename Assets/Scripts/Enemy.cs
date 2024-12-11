@@ -9,11 +9,13 @@ public class Enemy : MonoBehaviour
     private float speed = 1f,speedRandomMultiplier=1f;
     private float xPos;
     private PlayerMovement pm;
+    private TextManager tm;
     
 
     void Start() 
     {
         pm = FindObjectOfType<PlayerMovement>();
+        tm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<TextManager>();
         xPos = Random.Range(-pm.xBorderValue, pm.xBorderValue);
         transform.position = new Vector3(xPos, 6, 0);
         speed = speed+ Random.Range(0, speedRandomMultiplier);
@@ -46,6 +48,7 @@ public class Enemy : MonoBehaviour
         }
         else if (other.CompareTag("Laser")) 
         {
+            tm.AddScore(100);
             pm.SpawnExp(transform.position);
             Destroy(other.gameObject);
             Destroy(gameObject);

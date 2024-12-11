@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 
@@ -39,19 +40,25 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool tripleShotIsActive=false;
     [SerializeField] private GameObject tripleLaserPrefab;
     [SerializeField] private float tripleShotDuration = 5f;
-    Coroutine tripCoroutine;
+    [SerializeField] private Image tripTimerImage;
+    Coroutine tripCoroutine, tripUIUpdateCoroutine;
 
     [Header("Speed Power-Up Settings")]
     [SerializeField] private bool speedIsActive = false;
     [SerializeField] private float speedDuration = 5f;
     [SerializeField] private float speedMultiplier = 2f;
-    Coroutine speedCoroutine;
+    [SerializeField] private Image speedTimerImage;
+    Coroutine speedCoroutine, speedUIUpdateCoroutine;
+
 
     [Header("VFX Settings")]
     [SerializeField] private GameObject explosionPrefab;
     [SerializeField] private Transform vfxContainer;
     public Animator animator;
     CameraShake cameraShake;
+
+    private TextManager textManager;
+
     void Start()
     {
         Debug.Log("Game Started");
@@ -59,8 +66,10 @@ public class PlayerMovement : MonoBehaviour
         cameraShake = Camera.main.GetComponent<CameraShake>();
         currentSpeed=regularSpeed;
         animator = transform.GetChild(0).GetComponent<Animator>();
+        tripTimerImage.gameObject.SetActive(false);
+        speedTimerImage.gameObject.SetActive(false);
 
-
+        textManager=GameObject.FindGameObjectWithTag("GameManager").GetComponent<TextManager>();
     }
     
     void Update()// fpse bagli calisir
@@ -141,11 +150,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void LowerLives()
     {
+        textManager.DamagePlayer(lives);
         lives--;
         if (lives <= 0) 
         {
             Destroy(gameObject);
             Debug.Log("No Lives Left GAME OVER!!");
+            
         }
 
     }
@@ -178,10 +189,23 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator TripleEffect()
     {
+        if (tripUIUpdateCoroutine == null)
+        {
+            tripUIUpdateCoroutine = StartCoroutine(UIUpdate(tripTimerImage, tripleShotDuration));
+        }
+        else
+        {
+            tripTimerImage.gameObject.SetActive(false);
+            StopCoroutine(tripUIUpdateCoroutine);
+            tripUIUpdateCoroutine = StartCoroutine(UIUpdate(tripTimerImage, tripleShotDuration));
 
+        }
+        
         yield return new WaitForSeconds(tripleShotDuration);
         tripleShotIsActive = false;
     }
+
+
 
     public void StartSpeedPowerUp()
     {
@@ -199,19 +223,57 @@ public class PlayerMovement : MonoBehaviour
             speedIsActive = true;
             
             speedCoroutine = StartCoroutine(SpeedEffect());
+            
         }
 
     }
 
     public IEnumerator SpeedEffect()
     {
-        currentSpeed=regularSpeed*speedMultiplier;
+        currentSpeed = regularSpeed * speedMultiplier;
         animator.SetBool("SpeedIsOn", true);
 
+        if (speedUIUpdateCoroutine == null)
+        {
+            speedUIUpdateCoroutine = StartCoroutine(UIUpdate(speedTimerImage, speedDuration));
+        }
+        else 
+        {
+            speedTimerImage.gameObject.SetActive(false);
+            StopCoroutine(speedUIUpdateCoroutine);
+            speedUIUpdateCoroutine = StartCoroutine(UIUpdate(speedTimerImage, speedDuration));
+
+        }
+        
         yield return new WaitForSeconds(speedDuration);
+
         currentSpeed = regularSpeed;
         speedIsActive = false;
         animator.SetBool("SpeedIsOn", false);
+    }
+
+
+
+    
+
+    private IEnumerator UIUpdate(Image powerUpImage, float duration)
+    {
+        
+        powerUpImage.gameObject.transform.SetSiblingIndex(1);
+        powerUpImage.gameObject.SetActive(true);
+        powerUpImage.fillAmount = 1;
+
+        float elapsedTime = 0;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            powerUpImage.fillAmount = 1 - (elapsedTime / duration);
+            yield return null;
+        }
+
+        powerUpImage.fillAmount = 0;
+        powerUpImage.gameObject.SetActive(false);
     }
 
 
