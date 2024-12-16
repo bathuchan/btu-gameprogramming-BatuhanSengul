@@ -6,57 +6,75 @@ using UnityEngine.SceneManagement;
 
 public class TextManager : MonoBehaviour
 {
-    public TextMeshProUGUI scoreValueText;     
-    public float incrementSpeed = 0.05f; 
+    public static TextManager Instance { get; private set; } // Singleton Instance
 
-    private int currentScore = 0;        
-    private int targetScore = 0;         
+    public TextMeshProUGUI scoreValueText;
+    public float incrementSpeed = 0.05f;
+    public int incrementStep = 5;
+
+    private int currentScore = 0;
+    private int targetScore = 0;
     private Coroutine incrementCoroutine;
 
     [Header("Health Settings")]
-    public GameObject healthSpritesParent; 
-    public Color damageColor = Color.red;            
-    private Color defaultHealthColor=Color.green;
+    public GameObject healthSpritesParent;
+    public Color damageColor = Color.red;
+    private Color defaultHealthColor = Color.green;
 
     [Header("UI Settings")]
     public GameObject top;
-    public GameObject middle,bottom, gameoverGameObject;
+    public GameObject middle, bottom, gameoverGameObject;
     public TextMeshProUGUI endScoreValueText;
-    public float flickerSpeed = 0.2f;  
+    public float flickerSpeed = 0.2f;
 
     private Coroutine flickerCoroutine;
-    private bool gameEnded= false;
+    private bool gameEnded = false;
 
     private void Awake()
     {
-        if (gameoverGameObject.activeSelf) 
+        // Ensure only one instance of the singleton exists
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        // Prevent this object from being destroyed when loading new scenes
+        DontDestroyOnLoad(gameObject);
+
+        if (gameoverGameObject.activeSelf)
         {
             gameoverGameObject.SetActive(false);
         }
-        
     }
+
     private void Start()
     {
-
+        gameoverGameObject.SetActive(false);
         scoreValueText.text = "000000";
-
         defaultHealthColor = healthSpritesParent.transform.GetChild(0).GetComponent<Image>().color;
-        
     }
 
     private void Update()
     {
-        if(gameEnded&& Input.GetKeyDown(KeyCode.R))
+        if (gameEnded && Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene("MainScene");
+            ResetSetup();
+
+
         }
     }
+
+    
 
     public void AddScore(int amount)
     {
         targetScore += amount;
 
-        
         if (incrementCoroutine != null)
         {
             StopCoroutine(incrementCoroutine);
@@ -69,8 +87,8 @@ public class TextManager : MonoBehaviour
     {
         while (currentScore < targetScore)
         {
-            currentScore+=5;
-            scoreValueText.text = currentScore.ToString("D6"); 
+            currentScore += incrementStep;
+            scoreValueText.text = currentScore.ToString("D6");
 
             yield return new WaitForSeconds(incrementSpeed);
         }
@@ -80,22 +98,25 @@ public class TextManager : MonoBehaviour
 
     public void DamagePlayer(int healthPoint)
     {
-       
-        Transform damagedSprite = healthSpritesParent.transform.GetChild(healthPoint-1);
+        Transform damagedSprite = healthSpritesParent.transform.GetChild(healthPoint - 1);
         Image spriteImage = damagedSprite.GetComponent<Image>();
-        
+
         if (spriteImage != null)
         {
-            
             spriteImage.color = damageColor;
-
         }
+    }
 
+    public void ResetHealthSprites() 
+    {
+        foreach(Image spriteImage in healthSpritesParent.GetComponentsInChildren<Image>()) 
+        {
+            spriteImage.color = defaultHealthColor;
+        }
     }
 
     public IEnumerator PowerupUIUpdate(Image powerUpImage, float duration)
     {
-
         powerUpImage.gameObject.transform.SetSiblingIndex(1);
         powerUpImage.gameObject.SetActive(true);
         powerUpImage.fillAmount = 1;
@@ -113,7 +134,7 @@ public class TextManager : MonoBehaviour
         powerUpImage.gameObject.SetActive(false);
     }
 
-    public void GameoverUIUpdates() 
+    public void GameoverUIUpdates()
     {
         top.SetActive(false);
         gameoverGameObject.SetActive(true);
@@ -127,14 +148,12 @@ public class TextManager : MonoBehaviour
         gameEnded = true;
     }
 
-    
-
     private IEnumerator FlickerText()
     {
         TextMeshProUGUI[] texts = middle.GetComponentsInChildren<TextMeshProUGUI>();
         while (true)
         {
-            foreach (TextMeshProUGUI text in texts) 
+            foreach (TextMeshProUGUI text in texts)
             {
                 Color color = text.color;
                 color.a = color.a == 1f ? 0f : 1f;
@@ -142,5 +161,19 @@ public class TextManager : MonoBehaviour
             }
             yield return new WaitForSeconds(flickerSpeed);
         }
+    }
+
+    private void ResetSetup()
+    {
+        StopAllCoroutines();
+        gameoverGameObject.SetActive(false);
+        top.SetActive(true);
+        bottom.SetActive(true);
+        ResetHealthSprites();
+        Referances.Instance.ClearContainers();
+        scoreValueText.text = "000000";
+        currentScore = 0;
+        targetScore = 0;
+        SceneManager.LoadScene("MainScene");
     }
 }

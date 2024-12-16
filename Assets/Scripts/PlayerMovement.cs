@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.SearchService;
 using UnityEngine;
@@ -12,16 +13,17 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]private float regularSpeed = 3f;
-    private float currentSpeed;
+    public static PlayerMovement Instance { get; private set; } // Singleton Instance
 
+    [SerializeField] private float regularSpeed = 3f;
+    private float currentSpeed;
 
     public float xBorderValue, yBorderValue;
 
     private float horizontalVal, verticalVal;
 
     [SerializeField]
-    private GameObject laserPrefab, laserContainer;
+    private GameObject laserPrefab;
 
     [SerializeField]
     private float projSpeed = 10f, projLifespan = 1f;
@@ -32,48 +34,74 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Sprite Tilt Settings")]
     [SerializeField] private GameObject playerSprite;
-    public float tiltAmount = 5f;    
-    public float tiltSpeed = 5f;     
-    public float maxTiltAngle = 5f;  
+    public float tiltAmount = 5f;
+    public float tiltSpeed = 5f;
+    public float maxTiltAngle = 5f;
 
     private float targetZRotation;
 
     [Header("TripleShot Power-Up Settings")]
-    [SerializeField] private bool tripleShotIsActive=false;
+    [SerializeField] private bool tripleShotIsActive = false;
     [SerializeField] private GameObject tripleLaserPrefab;
     [SerializeField] private float tripleShotDuration = 5f;
-    [SerializeField] private Image tripTimerImage;
+    private Image tripTimerImage;
+
+
     Coroutine tripCoroutine, tripUIUpdateCoroutine;
 
     [Header("Speed Power-Up Settings")]
     [SerializeField] private bool speedIsActive = false;
     [SerializeField] private float speedDuration = 5f;
     [SerializeField] private float speedMultiplier = 2f;
-    [SerializeField] private Image speedTimerImage;
-    Coroutine speedCoroutine, speedUIUpdateCoroutine;
+    private Image speedTimerImage;
 
+
+    Coroutine speedCoroutine, speedUIUpdateCoroutine;
 
     [Header("VFX Settings")]
     [SerializeField] private GameObject explosionPrefab;
-    [SerializeField] private Transform vfxContainer;
+    
     public Animator animator;
     CameraShake cameraShake;
 
     private TextManager tm;
 
+    [HideInInspector] public bool canTakeDamage = true;
+    Coroutine immunityCoroutine;
+
+    private void Awake()
+    {
+        // Singleton Pattern: Ensure only one instance exists
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject); // Destroy the duplicate
+            return;
+        }
+
+        Instance = this;
+        
+        
+    }
+
     void Start()
     {
+        Camera.main.transform.position = new Vector3 (0, 0, -10);
         Debug.Log("Game Started");
-        timer= fireCooldown;
+        timer = fireCooldown;
         cameraShake = Camera.main.GetComponent<CameraShake>();
-        currentSpeed=regularSpeed;
+        currentSpeed = regularSpeed;
         animator = transform.GetChild(0).GetComponent<Animator>();
+
+        tripTimerImage=Referances.Instance.tripTimerImage;
+        speedTimerImage=Referances.Instance.speedTimerImage;
+
         tripTimerImage.gameObject.SetActive(false);
         speedTimerImage.gameObject.SetActive(false);
 
-        tm=GameObject.FindGameObjectWithTag("GameManager").GetComponent<TextManager>();
+        tm = TextManager.Instance; // Access TextManager singleton instance
+
     }
-    
+
     void Update()// fpse bagli calisir
     {
         if (fireCooldown >= 0) 
@@ -84,7 +112,6 @@ public class PlayerMovement : MonoBehaviour
         HandleMovement();//Hareket fonksiyonu
         HandleShoot();//ates etme fonksiyonu
 
-        
     }
     
     public void HandleMovement() 
@@ -140,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
                 laser = Instantiate(laserPrefab, transform.position + Vector3.up, Quaternion.identity);
             }
             
-            laser.transform.parent=laserContainer.transform;
+            laser.transform.parent=Referances.Instance.laserContainer.transform;
             
             if(laser.TryGetComponent<Rigidbody>(out Rigidbody rb)) 
             {
@@ -156,13 +183,14 @@ public class PlayerMovement : MonoBehaviour
 
     public void LowerLives()
     {
-        tm.DamagePlayer(lives);
+        TextManager.Instance.DamagePlayer(lives);
         lives--;
         if (lives <= 0) 
         {
-            Destroy(gameObject);
-            tm.GameoverUIUpdates();
+            TextManager.Instance.gameObject.transform.position=Vector3.zero;
             
+            tm.GameoverUIUpdates();
+            Destroy(gameObject);
         }
 
     }
@@ -171,7 +199,7 @@ public class PlayerMovement : MonoBehaviour
     public void SpawnExp(Vector3 expPos) 
     {
         GameObject exp = Instantiate(explosionPrefab, expPos, Quaternion.identity);
-        exp.transform.parent = vfxContainer;
+        exp.transform.parent = Referances.Instance.vfxContainer.transform;
         Destroy(exp, 4f);
         cameraShake.StartShake(0.5f, 0.3f);
     }
@@ -260,8 +288,30 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("SpeedIsOn", false);
     }
 
+    public void StartImmunity(float time) 
+    {
+        if (immunityCoroutine == null)
+        {
+            immunityCoroutine = StartCoroutine(Immunity(time));
+        }
+        else 
+        {
+            
+            StopCoroutine(immunityCoroutine);
+            
+            immunityCoroutine = StartCoroutine(Immunity(time));
+        }
+    }
 
 
+     IEnumerator Immunity(float time) 
+    {
+        canTakeDamage = false;
+        animator.SetBool("Immune", true);
+        yield return new WaitForSeconds(time);
+        animator.SetBool("Immune", false);
+        canTakeDamage =true;
+    }
     
 
     

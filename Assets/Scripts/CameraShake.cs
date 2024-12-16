@@ -21,8 +21,6 @@ public class CameraShake : MonoBehaviour
     {
         float elapsed = 0f;
 
-        // Store the original position to reset later
-        originalPosition = transform.localPosition;
 
         while (elapsed < duration)
         {

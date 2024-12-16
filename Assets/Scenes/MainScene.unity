@@ -5039,7 +5039,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &174701030
 RectTransform:
@@ -10093,7 +10093,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &698777882
 RectTransform:
@@ -10143,6 +10143,58 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &781775262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 781775264}
+  - component: {fileID: 781775263}
+  m_Layer: 0
+  m_Name: Spawners
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &781775263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781775262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 271c7171d654b1f40a20569ea0712968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spaceshipEnemyPrefab: {fileID: 823269636515126893, guid: 03876e7068764da49b56081a1d4a8f36, type: 3}
+  spaceshipEnemySpawnTime: 3
+  astroidEnemyPrefab: {fileID: 5605470152183147573, guid: 2017b079cc881574a9b52f01d4c084f3, type: 3}
+  astroidEnemySpawnTime: 15
+  triplePowerUpPrefab: {fileID: 6870815547807965956, guid: 427c757316245d849a12cd092c8dea25, type: 3}
+  tripSpawnChance: 0.067
+  speedPowerUpPrefab: {fileID: 5103766751755486856, guid: 10bb0e28ee6055f49ad3368616e03e67, type: 3}
+  speedSpawnChance: 0.07
+--- !u!4 &781775264
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781775262}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &820409519
 GameObject:
   m_ObjectHideFlags: 0
@@ -10159,7 +10211,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &820409520
 RectTransform:
@@ -10294,7 +10346,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &864547858
 RectTransform:
@@ -10368,7 +10420,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &898241671
 RectTransform:
@@ -10464,7 +10516,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &959403964
 RectTransform:
@@ -10539,7 +10591,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &973223252
 RectTransform:
@@ -10673,7 +10725,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &1046737190
 RectTransform:
@@ -10809,7 +10861,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &1050341153
 RectTransform:
@@ -10904,7 +10956,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &1150852658
 RectTransform:
@@ -10949,7 +11001,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &1188398387
 RectTransform:
@@ -11094,7 +11146,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &1363490129
 RectTransform:
@@ -11402,7 +11454,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &1578949697
 RectTransform:
@@ -11537,7 +11589,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &1654197541
 MonoBehaviour:
@@ -11617,7 +11669,7 @@ RectTransform:
   - {fileID: 1846748937}
   - {fileID: 1188398387}
   - {fileID: 174701030}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1781500641}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -11640,7 +11692,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &1663815775
 RectTransform:
@@ -11802,8 +11854,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1781500641}
-  - component: {fileID: 1781500640}
   - component: {fileID: 1781500642}
+  - component: {fileID: 1781500643}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -11811,26 +11863,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1781500640
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1781500639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 271c7171d654b1f40a20569ea0712968, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 823269636515126893, guid: 03876e7068764da49b56081a1d4a8f36, type: 3}
-  enemyContainer: {fileID: 286142113}
-  enemySpawnTime: 1.5
-  powerUpContainer: {fileID: 94287067}
-  triplePowerUpPrefab: {fileID: 6870815547807965956, guid: 427c757316245d849a12cd092c8dea25, type: 3}
-  tripSpawnChance: 0.067
-  speedPowerUpPrefab: {fileID: 5103766751755486856, guid: 10bb0e28ee6055f49ad3368616e03e67, type: 3}
-  speedSpawnChance: 0.07
 --- !u!4 &1781500641
 Transform:
   m_ObjectHideFlags: 0
@@ -11844,10 +11876,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 286142114}
   - {fileID: 94287068}
+  - {fileID: 286142114}
   - {fileID: 216157557}
   - {fileID: 67279126}
+  - {fileID: 1654197544}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1781500642
@@ -11863,7 +11896,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreValueText: {fileID: 2129992637}
-  incrementSpeed: 0.05
+  incrementSpeed: 0.005
+  incrementStep: 5
   healthSpritesParent: {fileID: 698777881}
   damageColor: {r: 1, g: 0, b: 0, a: 0.49019608}
   top: {fileID: 1846748936}
@@ -11872,6 +11906,24 @@ MonoBehaviour:
   gameoverGameObject: {fileID: 1843240512}
   endScoreValueText: {fileID: 973223253}
   flickerSpeed: 0.5
+--- !u!114 &1781500643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781500639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ff16ff3c120d274d8ed3ca25cc580a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpContainer: {fileID: 94287067}
+  enemyContainer: {fileID: 286142113}
+  laserContainer: {fileID: 216157556}
+  vfxContainer: {fileID: 67279125}
+  tripTimerImage: {fileID: 898241672}
+  speedTimerImage: {fileID: 1050341154}
 --- !u!1 &1843240512
 GameObject:
   m_ObjectHideFlags: 0
@@ -11888,7 +11940,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &1843240513
 RectTransform:
@@ -12023,7 +12075,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &1846748937
 RectTransform:
@@ -12186,10 +12238,9 @@ MonoBehaviour:
   xBorderValue: 8.4
   yBorderValue: 4.4
   laserPrefab: {fileID: 2335018731292569534, guid: 5ea0254ebe4ed6c49b0bc409def05736, type: 3}
-  laserContainer: {fileID: 216157556}
   projSpeed: 10
   projLifespan: 1
-  fireCooldown: 0.5
+  fireCooldown: 0.4
   timer: 0
   lives: 3
   playerSprite: {fileID: 399134679}
@@ -12199,14 +12250,12 @@ MonoBehaviour:
   tripleShotIsActive: 0
   tripleLaserPrefab: {fileID: 838002458404725703, guid: 6d38bb9eb9d6e9944b652e323b618771, type: 3}
   tripleShotDuration: 7
-  tripTimerImage: {fileID: 898241672}
   speedIsActive: 0
   speedDuration: 5
   speedMultiplier: 2
-  speedTimerImage: {fileID: 1050341154}
   explosionPrefab: {fileID: 5523598203160283805, guid: 8c4c02ce4d9239a42941c45511308600, type: 3}
-  vfxContainer: {fileID: 67279126}
   animator: {fileID: 0}
+  canTakeDamage: 1
 --- !u!4 &1935456906
 Transform:
   m_ObjectHideFlags: 0
@@ -12260,7 +12309,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &2077602553
 RectTransform:
@@ -12335,7 +12384,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!224 &2129992636
 RectTransform:
@@ -12457,10 +12506,10 @@ CanvasRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 781775264}
   - {fileID: 1781500641}
   - {fileID: 1553372998}
   - {fileID: 1677137101}
   - {fileID: 1935456906}
   - {fileID: 1875679531}
-  - {fileID: 1654197544}
   - {fileID: 1367970741}

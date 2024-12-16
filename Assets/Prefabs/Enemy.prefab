@@ -4842,6 +4842,7 @@ GameObject:
   - component: {fileID: 7899831597213996949}
   - component: {fileID: 466731871002659203}
   - component: {fileID: 6651853082787341569}
+  - component: {fileID: 5596277702955684894}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -4927,8 +4928,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   speedRandomMultiplier: 2
-  explosionPrefab: {fileID: 5523598203160283805, guid: 8c4c02ce4d9239a42941c45511308600, type: 3}
-  vfxContainer: {fileID: 0}
+--- !u!95 &5596277702955684894
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823269636515126893}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 24de0abd6dde8c94f94d8915a4a16f27, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4148706945537671098
 GameObject:
   m_ObjectHideFlags: 0
