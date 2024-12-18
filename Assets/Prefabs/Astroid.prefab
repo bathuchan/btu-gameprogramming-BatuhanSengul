@@ -4878,7 +4878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a94db40e733ae4c9212c6b784884f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 2
   speedRandomMultiplier: 1
   isAsteroid: 1
   asteroidPrefab: {fileID: 5605470152183147573}

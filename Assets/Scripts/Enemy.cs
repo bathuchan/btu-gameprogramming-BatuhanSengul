@@ -20,7 +20,8 @@ public class Enemy : MonoBehaviour
     private float spinSpeed;         // Speed of spinning animation
 
     private GameObject spriteGO;
-
+    int[] possibleXValues= {-2,-1,1,2 };
+    
     void Start()
     {
         
@@ -34,7 +35,7 @@ public class Enemy : MonoBehaviour
 
         if (isAsteroid && moveDirection == Vector3.zero)
         {
-            moveDirection = new Vector3(Random.Range(-3f, 3f), Random.Range(-1f, -1.5f), 0f).normalized;
+            moveDirection = new Vector3(possibleXValues[Random.Range(0, possibleXValues.Length)], Random.Range(-speed, -1.5f), 0f).normalized;
         }
         // Set random x-position and speed
         xPos = Random.Range(-PlayerMovement.Instance.xBorderValue, PlayerMovement.Instance.xBorderValue);
@@ -58,7 +59,7 @@ public class Enemy : MonoBehaviour
         }
         else 
         {
-            spinSpeed *= 1.5f;
+            spinSpeed *= 1.1f;
         }
     }
 
@@ -86,18 +87,16 @@ public class Enemy : MonoBehaviour
     }
     private void RotateAsteroid()
     {
-        // Calculate rotation angle based on movement direction
         float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
 
-        // Add rotation speed based on movement speed
-        float rotationSpeed = speed * 50f; // Adjust multiplier for desired effect
+        float rotationSpeed = speed * 50f; 
         transform.Rotate(0, 0, -rotationSpeed * Time.deltaTime);
     }
 
     private void SpinAsteroid()
     {
-        // Continuously rotate the asteroid on its Z-axis
+        
         if (moveDirection.x > 0) 
         {
             spriteGO.transform.Rotate(0, 0, -spinSpeed * Time.deltaTime);
@@ -118,13 +117,13 @@ public class Enemy : MonoBehaviour
         if (transform.position.x > xBorder + 2f)
         {
             //GetComponentInChildren<TrailRenderer>().Clear();
-            transform.position = new Vector3(-xBorder, transform.position.y, transform.position.z);
+            transform.position = new Vector3(-xBorder-1.2f, transform.position.y, transform.position.z);
             
         }
         else if (transform.position.x < -xBorder - 2f)
         {
             //GetComponentInChildren<TrailRenderer>().Clear();
-            transform.position = new Vector3(xBorder, transform.position.y, transform.position.z);
+            transform.position = new Vector3(xBorder + 1.2f, transform.position.y, transform.position.z);
             
         }
 
@@ -185,7 +184,7 @@ public class Enemy : MonoBehaviour
         if (!isAsteroid)
         {
             animator.SetTrigger("PlayDestroy");
-            speed = speed / 2f;
+            speed = 0;
             col.enabled = false;
             Destroy(gameObject, 1f);
         }
@@ -193,7 +192,7 @@ public class Enemy : MonoBehaviour
         {
             speed = speed / 2f;
             
-            Destroy(gameObject);
+            Destroy(gameObject,0.01f);
         }
     }
 
@@ -209,7 +208,7 @@ public class Enemy : MonoBehaviour
             duplicate1.transform.localScale = currentScale * 0.70f;
             Enemy asteroid1 = duplicate1.GetComponent<Enemy>();
             asteroid1.isAsteroid = true;
-            asteroid1.moveDirection = moveDirection + new Vector3(0, -duplicate1.transform.localScale.y, 0);
+            asteroid1.moveDirection = moveDirection.normalized;
             
 
 
@@ -219,10 +218,10 @@ public class Enemy : MonoBehaviour
             duplicate2.transform.localScale = currentScale * 0.70f;
             Enemy asteroid2 = duplicate2.GetComponent<Enemy>();
             asteroid2.isAsteroid = true;
-            asteroid2.moveDirection = new Vector3(-moveDirection.x, moveDirection.y, moveDirection.z) + new Vector3(0, -duplicate2.transform.localScale.y, 0);
+            asteroid2.moveDirection = new Vector3(-moveDirection.x, moveDirection.y, moveDirection.z).normalized;
             
 
-            asteroid1.speed += duplicate1.transform.localScale.y;
+            asteroid1.speed += duplicate1.transform.localScale.y*1.5f;
             asteroid2.speed = asteroid1.speed;
 
 
