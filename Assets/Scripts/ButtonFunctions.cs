@@ -7,6 +7,7 @@ public class ButtonFunctions : MonoBehaviour
 {
     public void StartGame()
     {
+        AudioManager.Instance.Play("UIChangeSFX");
         SceneManager.LoadScene("MainScene");
     }
 }

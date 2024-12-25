@@ -59,6 +59,7 @@ public class PowerUp : MonoBehaviour
                     Debug.LogWarning("PowerUp type doesnt declared!");
                     break;
             }
+            AudioManager.Instance.Play("PowerUpSFX");
             Destroy(gameObject);
         }
     }

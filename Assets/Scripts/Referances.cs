@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Referances : MonoBehaviour
@@ -21,8 +22,8 @@ public class Referances : MonoBehaviour
 
     }
 
-    public GameObject powerUpContainer, enemyContainer,laserContainer,vfxContainer;
-    public Image tripTimerImage,speedTimerImage;
+    public GameObject powerUpContainer, enemyContainer,laserContainer,vfxContainer,audioContainer;
+    public Image tripTimerImage ,speedTimerImage;
 
     public void ClearContainers() 
     {
@@ -47,4 +48,5 @@ public class Referances : MonoBehaviour
         }
 
     }
+    
 }

@@ -27,6 +27,7 @@ public class TextManager : MonoBehaviour
     public TextMeshProUGUI endScoreValueText;
     public float flickerSpeed = 0.2f;
 
+    public Canvas gameUICanvas;
     private Coroutine flickerCoroutine;
     private bool gameEnded = false;
 
@@ -52,6 +53,7 @@ public class TextManager : MonoBehaviour
         }
     }
 
+    
     private void Start()
     {
         gameoverGameObject.SetActive(false);
@@ -165,7 +167,9 @@ public class TextManager : MonoBehaviour
 
     private void ResetSetup()
     {
+        gameEnded = false;
         StopAllCoroutines();
+        AudioManager.Instance.Play("UIChangeSFX");
         gameoverGameObject.SetActive(false);
         top.SetActive(true);
         bottom.SetActive(true);
@@ -175,5 +179,11 @@ public class TextManager : MonoBehaviour
         currentScore = 0;
         targetScore = 0;
         SceneManager.LoadScene("MainScene");
+        SceneManager.sceneLoaded += AudioManager.Instance.OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= AudioManager.Instance.OnSceneLoaded; // Unhook to avoid memory leaks
     }
 }

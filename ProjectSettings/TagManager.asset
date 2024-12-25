@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - TriplePowerUp
   - GameManager
+  - TripShotUI
+  - SpeedUI
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - UI
   - Player
   - Laser
-  - 
+  - PostProccess
   - 
   - 
   - 

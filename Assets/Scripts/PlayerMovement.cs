@@ -79,13 +79,16 @@ public class PlayerMovement : MonoBehaviour
         }
 
         Instance = this;
-        
+
         
     }
 
     void Start()
     {
+
+        AudioManager.Instance.OnPlayerLoaded(gameObject);
         Camera.main.transform.position = new Vector3 (0, 0, -10);
+        TextManager.Instance.gameUICanvas.worldCamera = Camera.main;
         Debug.Log("Game Started");
         timer = fireCooldown;
         cameraShake = Camera.main.GetComponent<CameraShake>();
@@ -95,6 +98,9 @@ public class PlayerMovement : MonoBehaviour
         tripTimerImage=Referances.Instance.tripTimerImage;
         speedTimerImage=Referances.Instance.speedTimerImage;
 
+        //tripTimerImage = GameObject.FindGameObjectWithTag("TripShotUI").GetComponent<Image>();
+        //speedTimerImage = GameObject.FindGameObjectWithTag("SpeedUI").GetComponent<Image>();
+ 
         tripTimerImage.gameObject.SetActive(false);
         speedTimerImage.gameObject.SetActive(false);
 
@@ -166,7 +172,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 laser = Instantiate(laserPrefab, transform.position + Vector3.up, Quaternion.identity);
             }
-            
+            AudioManager.Instance.Play("LaserSFX");
             laser.transform.parent=Referances.Instance.laserContainer.transform;
             
             if(laser.TryGetComponent<Rigidbody>(out Rigidbody rb)) 
@@ -187,19 +193,24 @@ public class PlayerMovement : MonoBehaviour
         lives--;
         if (lives <= 0) 
         {
+            AudioManager.Instance.Play("GameEndSFX");
             TextManager.Instance.gameObject.transform.position=Vector3.zero;
             
             tm.GameoverUIUpdates();
             Destroy(gameObject);
+            return;
         }
+        AudioManager.Instance.Play("PlayerHitSFX");
 
     }
 
 
-    public void SpawnExp(Vector3 expPos) 
+    public void SpawnExp(GameObject explodedObject) 
     {
-        GameObject exp = Instantiate(explosionPrefab, expPos, Quaternion.identity);
+        GameObject exp = Instantiate(explosionPrefab, explodedObject.transform.position + new Vector3(0, 0, 0.05f), Quaternion.identity);
         exp.transform.parent = Referances.Instance.vfxContainer.transform;
+        exp.transform.localScale= explodedObject.transform.lossyScale;
+        //exp.transform.parent = Referances.Instance.vfxContainer.transform;
         Destroy(exp, 4f);
         cameraShake.StartShake(0.5f, 0.3f);
     }

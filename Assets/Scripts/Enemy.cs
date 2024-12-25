@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -143,9 +143,10 @@ public class Enemy : MonoBehaviour
         if (other.CompareTag("Player")&& PlayerMovement.Instance.canTakeDamage)
         {
             //Debug.Log("Oyuncu temasi");
-            PlayerMovement.Instance. SpawnExp(transform.position + new Vector3(0, 0, 0.05f));
+            PlayerMovement.Instance. SpawnExp(gameObject);
             PlayerMovement.Instance.LowerLives();
 
+            
             PlayerMovement.Instance.StartImmunity(2f);
             if (isAsteroid)
             {
@@ -156,8 +157,7 @@ public class Enemy : MonoBehaviour
         }
         else if (other.CompareTag("Laser"))
         {
-            //Debug.Log("Lazer temasi");
-            
+                        
             
             Destroy(other.gameObject);
 
@@ -171,14 +171,15 @@ public class Enemy : MonoBehaviour
             {
                 TextManager.Instance.AddScore(100);
             }
-            PlayerMovement.Instance.SpawnExp(transform.position + new Vector3(0, 0, 0.05f));
+            PlayerMovement.Instance.SpawnExp(gameObject);
+
             HandleDestruction();
         }
     }
 
     private void HandleDestruction()
     {
-        
+        AudioManager.Instance.PlayAtLocation("ExplosionSFX",gameObject.transform.position,.85f,5f,10f);
         if (!isAsteroid)
         {
             animator.SetTrigger("PlayDestroy");
@@ -189,8 +190,8 @@ public class Enemy : MonoBehaviour
         else
         {
             speed = speed / 2f;
-            
-            Destroy(gameObject,0.01f);
+            col.enabled = false;
+            Destroy(gameObject,0.01f);// 0 olduğunda hata oluyor
         }
     }
 
@@ -206,7 +207,7 @@ public class Enemy : MonoBehaviour
             Enemy asteroid1 = duplicate1.GetComponent<Enemy>();
             asteroid1.isAsteroid = true;
             asteroid1.moveDirection = moveDirection.normalized;
-            asteroid1.transform.parent=Referances.Instance.transform;
+            asteroid1.transform.parent=Referances.Instance.enemyContainer.transform;
 
 
             GameObject duplicate2 = Instantiate(asteroidPrefab, transform.position, Quaternion.identity);
@@ -214,7 +215,7 @@ public class Enemy : MonoBehaviour
             Enemy asteroid2 = duplicate2.GetComponent<Enemy>();
             asteroid2.isAsteroid = true;
             asteroid2.moveDirection = new Vector3(-moveDirection.x, moveDirection.y, moveDirection.z).normalized;
-            asteroid2.transform.parent = Referances.Instance.transform;
+            asteroid2.transform.parent = Referances.Instance.enemyContainer.transform;
 
             asteroid1.speed += duplicate1.transform.localScale.y*1.5f;
             asteroid2.speed = asteroid1.speed;
