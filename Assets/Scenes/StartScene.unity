@@ -1063,7 +1063,7 @@ MonoBehaviour:
     loop: 1
     playOnAwake: 1
     mixerGroup: {fileID: 24300002, guid: 696bfd5c9e4178247b7deff46636f09c, type: 2}
-    onDifferentGO: 1
+    onDifferentGO: 0
     attachedObject: {fileID: 0}
     attachedOnPlayer: 0
     source: {fileID: 0}
@@ -1079,7 +1079,7 @@ MonoBehaviour:
     loop: 0
     playOnAwake: 0
     mixerGroup: {fileID: 24300002, guid: 696bfd5c9e4178247b7deff46636f09c, type: 2}
-    onDifferentGO: 1
+    onDifferentGO: 0
     attachedObject: {fileID: 0}
     attachedOnPlayer: 1
     source: {fileID: 0}
